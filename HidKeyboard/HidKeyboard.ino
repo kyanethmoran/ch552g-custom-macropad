@@ -310,11 +310,11 @@ void loop()
       button.pressPrev = press;
       if (press)
       {
-        Consumer_press(button.key);
+        Keyboard_press(button.key);
       }
       else
       {
-        Consumer_release(button.key);
+        Keyboard_release(button.key);
       }
       button.lastPressed = millis();
     }
