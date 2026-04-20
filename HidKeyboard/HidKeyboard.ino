@@ -24,7 +24,7 @@
 #define KeyPad5 '5'
 #define KeyPad6 '6'
 
-// These are done via HIDConsumer
+// Rotary encoder and press are sent as normal keyboard keys
 #define RotaryKeypress '7'
 #define RotaryCW '8'
 #define RotaryCCW '9'
