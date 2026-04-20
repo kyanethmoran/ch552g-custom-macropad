@@ -9,18 +9,25 @@
 
   modified 2023
   by pakleni
+
+  ---   ADDITIONAL MODIFICATIONS DONE BY: kyanethmoran   ---
+  -    This code had been update to flash a aliexpress     -
+  -     keyboard using the CH552G to create a more in      -
+  -     depth stream deck from a non working keypad        -
+  -------------------------2026-----------------------------
+
 */
-#define KeyPad1 KEY_LEFT_ALT
-#define KeyPad2 'w'
-#define KeyPad3 'f'
-#define KeyPad4 'a'
-#define KeyPad5 's'
-#define KeyPad6 'd'
+#define KeyPad1 '1'
+#define KeyPad2 '2'
+#define KeyPad3 '3'
+#define KeyPad4 '4'
+#define KeyPad5 '5'
+#define KeyPad6 '6'
 
 // These are done via HIDConsumer
-#define RotaryKeypress MEDIA_VOLUME_MUTE
-#define RotaryCW MEDIA_VOLUME_UP
-#define RotaryCCW MEDIA_VOLUME_DOWN
+#define RotaryKeypress '7'
+#define RotaryCW '8'
+#define RotaryCCW '9'
 
 #ifndef USER_USB_RAM
 #error "This example needs to be compiled with a USER USB setting"
@@ -264,11 +271,11 @@ void loop()
     {
       if (encoder_change > 0)
       {
-        Consumer_write(RotaryCW);
+        Keyboard_write(RotaryCW);
       }
       else if (encoder_change < 0)
       {
-        Consumer_write(RotaryCCW);
+        Keyboard_write(RotaryCCW);
       }
     }
     else
