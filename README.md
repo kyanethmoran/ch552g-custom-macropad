@@ -6,6 +6,12 @@ Made for **ANXIN-K6-VT1-LED-V01** Ali express keyboard
 
 --------Additions made by kyanethmoran--------------
 
+## Project Status
+
+This project is currently a work in progress.
+
+The reflashed keypad firmware is working, and the board now outputs dedicated keys for use as a macro device. The Python desktop-side application is still being developed, so some files and folders are currently placeholders for planned features such as profiles, actions, and the GUI.
+
 ## Why I Started This Project
 
 This keypad originally came with its own stock firmware and built-in behavior, so it was not completely unusable out of the box. However, after testing it, I found that the default functionality was too limited for what I wanted.
