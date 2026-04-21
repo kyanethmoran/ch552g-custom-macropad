@@ -76,8 +76,9 @@ Using Arduino IDE 1.8.19 in portable mode avoided those path problems.
 
 ### Required board manager URL
 
-```text
+```
 https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xduino_mcs51_index.json
+```
 
 ## Bootloader Entry Method
 
@@ -103,4 +104,7 @@ The most reliable method I found was to use **jumper wires** to short the pads l
 Normal upload attempts without the `SW2` short and key hold were not detected by the CH55x uploader.
 
 Using jumper wires made the process easier for one person working alone and more repeatable than trying to short the pads manually with a metal tool.
+
+```
+
 ```
