@@ -4,6 +4,7 @@ import keyboard
 import win32gui
 import win32process
 import pythoncom
+import webbrowser
 from pycaw.pycaw import AudioUtilities
 
 # ============================================================
@@ -180,6 +181,16 @@ def close_process_by_name(process_name):
     except Exception as error:
         print(f"[ERROR] Failed to close process '{process_name}': {error}")
 
+def open_url(url):
+    """
+    Open a URL in the users default web browser
+    """
+    try:
+        webbrowser.open(url)
+        print(f"[ACTION] Opened URL: {url}")
+    except Exception as error:
+        print(f"[ERROR] Failed to open URL '{url}': {error}")
+
 def register_hotkeys():
     """
     Register all keypad hotkeys and connect them to actions.
@@ -200,7 +211,7 @@ def register_hotkeys():
     keyboard.add_hotkey("f16", print_foreground_app)
 
     # F17 = Button 5
-    keyboard.add_hotkey("f17", lambda: print("[ACTION] F17 pressed - placeholder action"))
+    keyboard.add_hotkey("f17", lambda:open_url("https://www.youtube.com"))
 
     # F18 = Button 6
     keyboard.add_hotkey("f18", lambda: print("[ACTION] F18 pressed - placeholder action"))
