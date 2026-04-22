@@ -9,7 +9,7 @@ from pycaw.pycaw import AudioUtilities
 # ============================================================
 # This section holds values that are easy to change without
 # digging through the rest of the code.
-STEAM_PATH = r"C:\Program Files (x86)\Steam\steam.exe"
+STEAM_PATH = r"G:\Steam\steam.exe"
 
 SECOND_APP = "notepad.exe"
 
