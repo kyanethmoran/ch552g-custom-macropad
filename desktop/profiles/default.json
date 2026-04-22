@@ -1,0 +1,36 @@
+{
+  "f13": {
+    "type": "open_app",
+    "path": "G:\\Steam\\steam.exe"
+  },
+  "f14": {
+    "type": "open_app",
+    "path": "notepad.exe"
+  },
+  "f15": {
+    "type": "close_app",
+    "process_name": "notepad.exe"
+  },
+  "f16": {
+    "type": "print_active_app"
+  },
+  "f17": {
+    "type": "open_url",
+    "url": "https://www.youtube.com"
+  },
+  "f18": {
+    "type": "print_message",
+    "message": "F18 placeholder action"
+  },
+  "f19": {
+    "type": "toggle_mute_active_app"
+  },
+  "f20": {
+    "type": "volume_up_active_app",
+    "step": 0.05
+  },
+  "f21": {
+    "type": "volume_down_active_app",
+    "step": 0.05
+  }
+}
