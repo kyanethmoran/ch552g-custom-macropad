@@ -15,6 +15,7 @@ SECOND_APP = "notepad.exe"
 
 TEST_CLOSE_PROCESS = "notepad.exe"
 
+#5% volume change per knob step
 VOLUME_STEP = 0.05
 # ============================================================
 
@@ -52,99 +53,86 @@ def print_foreground_app():
     app_name = get_foreground_process_name()
     print(f"[DEBUG] Active app: {app_name}")
 
-
-def get_audio_session_for_foreground():
-    """
-    Try to find the Windows audio session that matches the
-    currently focused application.
-
-    Returns:
-    - a pycaw session object if found
-    - None if the active app has no active audio session
-    """
-
-    foreground_process = get_foreground_process_name()
-
-    if not foreground_process:
-        print("[INFO] No foreground process found.")
-        return None
-
-    sessions = AudioUtilities.GetAllSessions()
-
-    for session in sessions:
-        if session.Process:
-            session_name = session.Process.name()
-
-            if session_name.lower() == foreground_process.lower():
-                return session
-
-    print(f"[INFO] No active audio session found for {foreground_process}")
-    return None
-
 def toggle_mute_active_app():
     """
-    Toggle mute/unmute for the currently focused application's
-    audio session.
+    Toggle mute/unmute for the currently focued application's 
+    audio session
     """
 
-    session = get_audio_session_for_foreground()
-
-    if session is None:
-        print("[INFO] Could not toggle mute because no active audio session was found.")
-        return
+    pythoncom.CoInitialize()
 
     try:
-        volume = session.SimpleAudioVolume
+        foreground_process = get_foreground_process_name()
 
-        is_muted = volume.GetMute()
+        if not foreground_process:
+            print("[INFO] No foreground process found.")
+            return
+        
+        sessions = AudioUtilities.GetAllSessions()
 
-        new_state = 0 if is_muted else 1
-        volume.SetMute(new_state, None)
+        for session in sessions:
+            if session.Process and session.Process.name().lower() == foreground_process.lower():
+                volume = session.SimpleAudioVolume
 
-        app_name = session.Process.name() if session.Process else "Unknown app"
-        print(f"[ACTION] Toggled mute for {app_name}. New mute state: {new_state}")
+                is_muted = volume.GetMute()
+
+                new_state = 0 if is_muted else 1
+                volume.SetMute(new_state, None)
+
+                app_name = session.Process.name()
+                print(f"[ACTION] Toggled mute for {app_name}. New mute state: {new_state}")
+                return
+            
+            print(f"[INFO] No active audio session found for {foreground_process}")
 
     except Exception as error:
         print(f"[ERROR] Failed to toggle mute: {error}")
 
+    finally:
+        pythoncom.CoUninitialize()
 
 def change_volume_active_app(delta):
     """
-    Raise or lower the volume of the currently focused app.
-
+    Raide or lower the volume of the currently focues app.
     Parameters:
-    - delta: a float
-        positive value  = volume up
-        negative value  = volume down
-
-    Example:
-    - +0.05 raises volume by 5%
-    - -0.05 lowers volume by 5%
+    - delta: positive=volume up
+             negative = volume down
     """
-
-    session = get_audio_session_for_foreground()
-
-    if session is None:
-        print("[INFO] Could not change volume because no active audio session was found.")
-        return
+    pythoncom.CoInitialize()
 
     try:
-        volume = session.SimpleAudioVolume
+        foreground_process = get_foreground_process_name()
 
-        current_volume = volume.GetMasterVolume()
+        if not foreground_process:
+            print("[INFO] No foreground process found.")
+            return
+        
+        sessions = AudioUtilities.GetAllSessions()
 
-        new_volume = max(0.0, min(1.0, current_volume + delta))
+        for session in sessions:
+            if session.Process and session.Process.name().lower() == foreground_process.lower():
+                volume = session.SimpleAudioVolume
 
-        volume.SetMasterVolume(new_volume, None)
+                current_volume = volume.GetMasterVolume()
 
-        app_name = session.Process.name() if session.Process else "Unknown app"
-        print(
-            f"[ACTION] Changed {app_name} volume from "
-            f"{current_volume:.2f} to {new_volume:.2f}"
-        )
+                #add the delta with caps so never above 1 or below 0
+                new_volume = max(0.0, min(1.0, current_volume + delta))
+
+                volume.SetMasterVolume(new_volume, None)
+
+                app_name = session.Process.name()
+                print(
+                    f"[ACTION] Changed {app_name} volume from "
+                    f"{current_volume:.2f} to {new_volume:.2f}"
+                )
+                return
+        print(f"[INFO] No active audio session found for {foreground_process}")
 
     except Exception as error:
         print(f"[ERROR] Failed to change volume: {error}")
+
+    finally:
+        pythoncom.CoUninitialize()
 
 def open_app(path_or_command):
     """
