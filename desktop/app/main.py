@@ -96,6 +96,7 @@ def main():
     profile = load_profile(profile_path)
 
     #test and see if the keys are even registering to my scripts
+    #UPDATE: KEYS ARE REGISTERING
     keyboard.hook(debug_key_event)
 
     register_hotkeys(profile)
