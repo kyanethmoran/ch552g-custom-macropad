@@ -61,7 +61,7 @@ Action execution
 """
 def execute_action(action_config: dict):
    action_type = action_config.get("type")
-   handler = ACTION_MAP.GET(action_type)
+   handler = ACTION_MAP.get(action_type)
 
 """
 Hotkey registration
@@ -74,7 +74,7 @@ def register_hotkeys(profile: dict):
          lambda config = action_config: execute_action(config)
       )
 
-      print(f"[INGO] Registered {hotkey} -> {action_config.get('type')}")
+      print(f"[INFO] Registered {hotkey} -> {action_config.get('type')}")
 
 """
 Main
