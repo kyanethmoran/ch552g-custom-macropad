@@ -1,2 +1,10 @@
 .DS_Store
 .theia
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
