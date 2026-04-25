@@ -74,7 +74,7 @@ Hotkey registration
 def register_hotkeys(profile: dict):
    for hotkey, action_config in profile.items():
       #lambda to freeze current action_config, so hotkeys do not use like action_config from loop
-      keyboard.add_hotkey(
+      keyboard.on_press_key(
          hotkey,
          lambda config = action_config: execute_action(config)
       )
