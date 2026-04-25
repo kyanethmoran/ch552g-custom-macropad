@@ -98,19 +98,6 @@ def handle_key_event(event):
    print(f"[INFO] Triggering {key_name} -> {action_config.get('type')}")
    execute_action(action_config)
 
-# """
-# Hotkey registration
-# """
-# def register_hotkeys(profile: dict):
-#    for hotkey, action_config in profile.items():
-      
-#       def callback(event, config=action_config):
-#          execute_action(config)
-
-#       keyboard.on_press_key(hotkey,callback)
-
-#       print(f"[INFO] Registered {hotkey} -> {action_config.get('type')}")
-
 """
 Main
 """
@@ -127,7 +114,6 @@ def main():
     PROFILE = load_profile(profile_path)
 
     #test and see if the keys are even registering to my scripts
-    #UPDATE: KEYS ARE REGISTERING
     keyboard.hook(debug_key_event)
 
     for hotkey, action_config in PROFILE.items():
