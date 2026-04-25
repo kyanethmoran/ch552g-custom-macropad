@@ -63,28 +63,59 @@ def execute_action(action_config: dict):
    action_type = action_config.get("type")
    handler = ACTION_MAP.get(action_type)
 
+   if handler is None:
+      print(f"[WARNING] Unknown action type: {action_type}")
+      return
+   
+   handler(action_config)
+
 #testing to see if keys are registering
 def debug_key_event(event):
    if event.event_type == "down":
       print(f"[DEBUG] key name={event.name}, scan_code={event.scan_code}")
 
 """
-Hotkey registration
+Global profile storage
 """
-def register_hotkeys(profile: dict):
-   for hotkey, action_config in profile.items():
+PROFILE = {}
+
+"""
+Key event handler
+"""
+def handle_key_event(event):
+   if event.event_type != "down":
+      return
+   
+   key_name = str(event.name).lower()
+
+   print(f"[DEBUG] Key name={key_name}, scan_code={event.scan_code}")
+
+   if key_name not in PROFILE:
+      return
+   
+   action_config = PROFILE[key_name]
+
+   print(f"[INFO] Triggering {key_name} -> {action_config.get('type')}")
+   execute_action(action_config)
+
+# """
+# Hotkey registration
+# """
+# def register_hotkeys(profile: dict):
+#    for hotkey, action_config in profile.items():
       
-      def callback(event, config=action_config):
-         execute_action(config)
+#       def callback(event, config=action_config):
+#          execute_action(config)
 
-      keyboard.on_press_key(hotkey,callback)
+#       keyboard.on_press_key(hotkey,callback)
 
-      print(f"[INFO] Registered {hotkey} -> {action_config.get('type')}")
+#       print(f"[INFO] Registered {hotkey} -> {action_config.get('type')}")
 
 """
 Main
 """
 def main():
+    global PROFILE
 
     profile_path = "../profiles/default.json"
 
@@ -93,17 +124,20 @@ def main():
     print("=" * 60)
     print(f"Loading profile: {profile_path}")
 
-    profile = load_profile(profile_path)
+    PROFILE = load_profile(profile_path)
 
     #test and see if the keys are even registering to my scripts
     #UPDATE: KEYS ARE REGISTERING
     keyboard.hook(debug_key_event)
 
-    register_hotkeys(profile)
+    for hotkey, action_config in PROFILE.items():
+       print(f"[INFO] Loaded {hotkey} -> {action_config.get('type')}")
 
     print("Listening for keypad input...")
     print("Press ESC on your main keyboard to quit.")
     print("=" * 60)
+
+    keyboard.hook(handle_key_event)
 
     keyboard.wait("esc")
 
