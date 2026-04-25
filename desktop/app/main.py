@@ -63,6 +63,11 @@ def execute_action(action_config: dict):
    action_type = action_config.get("type")
    handler = ACTION_MAP.get(action_type)
 
+#testing to see if keys are registering
+def debug_key_event(event):
+   if event.event_type == "down":
+      print(f"[DEBUG] key name={event.name}, scan_code={event.scan_code}")
+
 """
 Hotkey registration
 """
@@ -89,6 +94,9 @@ def main():
     print(f"Loading profile: {profile_path}")
 
     profile = load_profile(profile_path)
+
+    #test and see if the keys are even registering to my scripts
+    keyboard.hook(debug_key_event)
 
     register_hotkeys(profile)
 
