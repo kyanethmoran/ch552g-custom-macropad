@@ -16,6 +16,9 @@ import win32process
 import pythoncom
 from pycaw.pycaw import AudioUtilities
 
+import os
+import keyboard
+
 def get_foreground_process_name():
 
   hwnd = win32gui.GetForegroundWindow()
@@ -64,6 +67,32 @@ def close_process_by_name(process_name: str):
 
   except Exception as error:
     print(f"[ERROR] Failed to close process '{process_name}': {error}")
+
+def open_folder(path: str):
+    try:
+       if not os.path.isdir(path):
+          print(f"[ERROR] Folder does not exist: {path}")
+          return
+       
+       os.startfile(path)
+       print(f"[ACTION] Opened folder: {path}")
+    except Exception as error:
+       print(f"[ERROR] Failed to open folder '{path}': {error}")
+
+def send_hotkey(keys: str):
+   """
+    Send a hotkey combination using the keyboard library.
+
+    Example strings:
+    - "ctrl+shift+esc"
+    - "alt+tab"
+    - "ctrl+s"
+    """
+   try:
+      keyboard.send(keys)
+      print(f"[ACTION] Sent hotkey: {keys}")
+   except Exception as error:
+      print(f"[ERROR] Failed to send hotkey '{keys}': {error}")
 
 def toggle_mute_active_app():
     pythoncom.CoInitialize()
