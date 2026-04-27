@@ -8,6 +8,8 @@ from actions import (
   print_forground_app,
   toggle_mute_active_app,
   change_volume_active_app,
+  open_folder,
+  send_hotkey
 )
 
 """
@@ -30,8 +32,13 @@ def action_print_message(action_config: dict):
   print(f"[ACTION] {action_config['message']}")
 
 def action_toggle_mute_active_app(action_config: dict):
-    toggle_mute_active_app()
+   toggle_mute_active_app()
 
+def action_open_folder(action_config: dict):
+   open_folder(action_config["path"])
+
+def action_send_hotkey(action_config: dict):
+   send_hotkey(action_config["keys"])
 
 def action_volume_up_active_app(action_config: dict):
     step = action_config.get("step", 0.05)
@@ -54,6 +61,8 @@ ACTION_MAP = {
    "toggle_mute_active_app": action_toggle_mute_active_app,
    "volume_up_active_app": action_volume_up_active_app,
    "volume_down_active_app": action_volume_down_active_app,
+   "open_folder": action_open_folder,
+   "send_hotkey": action_send_hotkey,
 }
 
 """
