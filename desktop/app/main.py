@@ -70,6 +70,11 @@ Action execution
 """
 def execute_action(action_config: dict):
    action_type = action_config.get("type")
+
+   if not isinstance(action_type, str):
+      print(f"[WARNING] Action is missing a valid 'type': {action_config}")
+      return
+
    handler = ACTION_MAP.get(action_type)
 
    if handler is None:
