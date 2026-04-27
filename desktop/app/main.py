@@ -11,6 +11,7 @@ from actions import (
   open_folder,
   send_hotkey
 )
+from validator import validate_profile
 
 """
 Action wrapper functions
