@@ -126,7 +126,14 @@ def main():
     print("=" * 60)
     print(f"Loading profile: {profile_path}")
 
-    PROFILE = load_profile(profile_path)
+    raw_profile = load_profile(profile_path)
+
+    PROFILE, errors = validate_profile(raw_profile)
+
+    if errors:
+       print("[WARNING] Some profile entries are invalid and were skipped:")
+       for error in errors:
+          print(f" - {error}")
 
     #test and see if the keys are even registering to my scripts
     keyboard.hook(debug_key_event)
@@ -139,7 +146,6 @@ def main():
     print("=" * 60)
 
     keyboard.hook(handle_key_event)
-
     keyboard.wait("esc")
 
     print("[INFO] Macro listener stopped.")
