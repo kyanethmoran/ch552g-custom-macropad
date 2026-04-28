@@ -8,8 +8,8 @@
     "path": "notepad.exe"
   },
   "f15": {
-    "type": "close_app",
-    "process_name": "notepad.exe"
+    "type": "print_message",
+    "message": "Hello from 15"
   },
   "f16": {
     "type": "send_hotkey",

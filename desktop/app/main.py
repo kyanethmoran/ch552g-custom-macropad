@@ -12,6 +12,8 @@ from actions import (
   send_hotkey
 )
 from validator import validate_profile
+from listener import MacroListener
+from ui import MacroApp
 
 """
 Action wrapper functions
@@ -121,6 +123,10 @@ def main():
 
     profile_path = "../profiles/default.json"
 
+    listener = MacroListener(profile_path=profile_path)
+    app= MacroApp(profile_path=profile_path, listener=listener)
+    app.mainloop()
+"""
     print("=" * 60)
     print("CH552G JSON Macro Listener")
     print("=" * 60)
@@ -149,7 +155,7 @@ def main():
     keyboard.wait("esc")
 
     print("[INFO] Macro listener stopped.")
-
+"""
 
 if __name__ == "__main__":
     main()
